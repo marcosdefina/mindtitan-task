@@ -1,5 +1,5 @@
 
-from worker import app, log
+from api import app, log
 
 @app.route('/')
 def index():

@@ -12,10 +12,10 @@ app = Flask(__name__)
 
 if os.environ.get('DEPLOYMENT') == 'PRODUCTION':
     log.debug('Using production configuration.')
-    app.config.from_object('worker.config.ProductionConfig')
+    app.config.from_object('api.config.ProductionConfig')
 else:
     log.debug('Using development configuration.')
-    app.config.from_object('worker.config.DevelopmentConfig')
+    app.config.from_object('api.config.DevelopmentConfig')
 
 
-import worker.views
+import api.views
