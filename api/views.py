@@ -5,7 +5,7 @@ import time
 import random
 
 ### Dicctionary '(user_id, counter)' as row on global_request_counter table.
-global_request_counter = {'0': 234, '1':456, '2':567, 'JoãoAlfredo': 789 }
+global_request_counter = {'1':456, '2':567, '3':123, '4':789, '5':741}
 
 def run_classifier():
     time.sleep(1)
