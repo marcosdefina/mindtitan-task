@@ -1,10 +1,9 @@
 <html>
-   <body>
-
-      ###TODO a login page###
-      <br>
+   <body style="background: burlywood">
       <form action = "http://localhost:5000/result" method = "POST">
          <p>ID <input type = "number" name = "id" /></p>
+         <!--TODO: form validation-->
+         <p style="color: red">only accepted integers greater than 0</p>
          <p>Question <input type = "text" name = "question" /></p>
          <p><input type = "submit" value = "submit" /></p>
       </form>
