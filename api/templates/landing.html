@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>chat-bot</title>
+</head>
+
+<body>
+    Landing!
+    <form action="{{ url_for('handle_data') }}" methdo="post">
+        Your Question: <input type="text" name="question"><br>
+        <input type="submit" value="Submit">
+    </form>
+    {% block content %}{% endblock content %}
+</body>
+
+</html>
