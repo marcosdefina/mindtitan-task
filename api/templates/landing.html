@@ -8,8 +8,8 @@
 
 <body>
     Landing!
-    <form action="{{ url_for('handle_data') }}" methdo="post">
-        Your Question: <input type="text" name="question"><br>
+    <form action="http://localhost:5000/landing/result" methdo="post">
+        Your Question: <input type="text" name="Question"><br>
         <input type="submit" value="Submit">
     </form>
     {% block content %}{% endblock content %}

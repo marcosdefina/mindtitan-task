@@ -1,18 +1,54 @@
 
 from api import app, log
 import flask
+import time
+import random
+
+### Dicctionary '(user_id, counter)' as row on global_request_counter table.
+global_request_counter = {'0': 234, '1':456, '2':567, 'JoãoAlfredo': 789 }
 
 def run_classifier():
-    # must do busy sleeping
+    time.sleep(1)
+    #while t < (info_lenght - 1):
+     #   t0= time.clock()
+    #    t= time.clock() - t0 # t is CPU seconds elapsed (floating point)
     #while elapsed_time < 1 second:
     return True
+    
 def get_external_data():
+    #0.1% chance of request failing
+    fail_key = random.randrange(1000)
+    if(fail_key is 404):
+        return 404
+
+    key = random.randrange(10)
+    if(key is 9):
+        time.sleep(60)
     # non-busy sleeping, we are waiting for IO
     #10% chance of sleep(1 minute)
-    return False
+
+    return 200
+
+def api_userdata_request():
+    #simulates a get on api database
+    return global_request_counter
+
+def post_new_request_count(data):
+    #simulates a post on api database
+    global_request_counter = data
+    return 200
 
 def increment_request_count(user_id):
-    return 1*user_id
+    
+    counter_aux = api_userdata_request()
+    
+    for key, value in counter_aux.items():
+        if(key is user_id):
+            counter_aux[key] = value + 1
+            return counter_aux
+    
+    counter_aux[user_id] = 1
+    return counter_aux
 
 def request(user_id):
     run_classifier()
@@ -20,39 +56,20 @@ def request(user_id):
     new_request_count = increment_request_count(user_id)
     return new_request_count
 
+###LANDING PAGE###
 @app.route('/')
-@app.route('/<id>')
-def index(id=None):
+def index():
     log.info('index loaded')
-    if(id and int(id) > 5):
-        return "Hell Yeah!"
-    else:
-        return "Hello World!"
-
-
-
-
-
-### UNDERSTANDING FLASK ###
-
-@app.route('/landing')
-def landing():
-    return flask.render_template('landing.html')
-
-@app.route('/student')
-def student():
-   return flask.render_template('student.html')
-
-@app.route('/handle_data', methods=['POST'])
-def handle_data():
-    data = flask.request.form
-    #projectpath = app.request.form['projectFilepath']
-    # your code
-    # return a response
-    return data
+    return flask.render_template('form.html')
 
 @app.route('/result',methods = ['POST', 'GET'])
 def result():
    if flask.request.method == 'POST':
       result = flask.request.form
+      global_request_counter = request(result['id'])
+      print(result['question'])
       return flask.render_template("result.html",result = result)
+
+@app.route('/database')
+def database():
+    return flask.render_template('result.html', result=global_request_counter)
