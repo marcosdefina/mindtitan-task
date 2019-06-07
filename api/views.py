@@ -4,15 +4,26 @@ import flask
 import time
 import random
 
+from multiprocessing import Pool
+from multiprocessing import cpu_count
+
+def f(x):
+    t = 0
+    while t < 10:
+        a=x*x
+        t += time.clock()
+        print(t)
+
+def cpu_load(how_many):
+    aux = int(how_many)
+    for i in range(aux):
+        p = Pool(aux)
+        p.map(f, range(aux))
+
 ### Dicctionary '(user_id, counter)' as row on global_request_counter table.
 global_request_counter = {'1':456, '2':567, '3':123, '4':789, '5':741}
 
 def run_classifier():
-    time.sleep(1)
-    #while t < (info_lenght - 1):
-     #   t0= time.clock()
-    #    t= time.clock() - t0 # t is CPU seconds elapsed (floating point)
-    #while elapsed_time < 1 second:
     return True
     
 def get_external_data():
@@ -23,7 +34,8 @@ def get_external_data():
 
     key = random.randrange(10)
     if(key is 9):
-        time.sleep(60)
+        time.sleep(5)
+        return 504
     # non-busy sleeping, we are waiting for IO
     #10% chance of sleep(1 minute)
 
@@ -66,6 +78,7 @@ def index():
 def result():
    if flask.request.method == 'POST':
       result = flask.request.form
+      cpu_load(result['id'])
       global_request_counter = request(result['id'])
       print(result['question'])
       return flask.render_template("result.html",result = result)
