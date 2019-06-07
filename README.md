@@ -28,5 +28,11 @@ The "Hello world!" can now be observed on   localhost at port 5000.
  - I would just need more time to make it works properly.
 
 ### Plans
- - I will learn how to use and use python libraries to send any request to a free core in the processors. I heard about Hadoop in a database event one time, but I don't know if its fit, just has to seek a little bit more.
+ - Understand and apply [Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/what-is-load-balancing.html) 
  - I have read a little bit of AWS lambda functions - Serverless backend, as I understood, maybe would help to minimize the costs of our hypothetical company, and could be as scalable as we want if we just using the horizontal scalability, sending requests to be requested by free cores. Supposing infinite cores at AWS we could have only the ping and the processing as response time, avoiding the problem with overload in the old approach.
+
+### Exercice 5 - Bonus
+ - With 400k access per month, where the most active part of the day is early evening (assumed as 4 hours), we would have about 2500 requests per hour in those hours. As Erik Duindam said in his [Article](https://medium.com/unboxd/how-i-built-an-app-with-500-000-users-in-5-days-on-a-100-server-77deeb238e83) on Medium, we could feed those requests using low-level database requests, specifically designed for our purposes. This could save money from the servers.
+     - All the efforts should be put in the developing of the classifier, all queries to the database should be as much precision as possible - even if it's needed a theoretical proof -
+     - Once optimized, the efforts should be aimed at the Load Balancer, using preferentially **The Round Robin Method**, as the requests have the Worst Case Processing Time(WCPT) known. This will order the cores to work in a queue, as large as we want, following the equation `number_of_cores = WCPT*2500requests/wished_time_of_waiting`.
+      - At last, we could pay more to use more processors, and control it as the users show their satisfaction with the product.
